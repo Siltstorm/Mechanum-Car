@@ -1,0 +1,111 @@
+int state;
+
+#include <Adafruit_MotorShield.h>
+
+// Create the motor shield object with the default I2C address
+
+Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
+Adafruit_DCMotor *myMotor_1 = AFMS.getMotor(1);
+Adafruit_DCMotor *myMotor_2 = AFMS.getMotor(2);
+Adafruit_DCMotor *myMotor_3 = AFMS.getMotor(3);
+Adafruit_DCMotor *myMotor_4 = AFMS.getMotor(4);
+
+
+
+void setup() {
+
+  Serial.begin(9600); // Default communication rate of the Bluetooth module
+
+   AFMS.begin();  // create with the default frequency 1.6KHz
+
+    myMotor_1->setSpeed(255);
+    myMotor_2->setSpeed(255);
+    myMotor_3->setSpeed(255);
+    myMotor_4->setSpeed(255);
+}
+
+void loop() {
+  if(Serial.available() > 0){ // Checks whether data is coming from the serial port
+state = Serial.read();
+
+switch(state) {
+      case 70 :  //F for Forward
+            myMotor_1->run(FORWARD);
+            myMotor_2->run(FORWARD);
+            myMotor_3->run(FORWARD);
+            myMotor_4->run(FORWARD);
+
+
+
+                delay(1000); 
+            myMotor_1->run(RELEASE);
+            myMotor_2->run(RELEASE);
+            myMotor_3->run(RELEASE);
+            myMotor_4->run(RELEASE); 
+            break;
+            
+      case 76 :  //L for Left
+            myMotor_1->run(FORWARD);
+            myMotor_2->run(BACKWARD);
+            myMotor_3->run(FORWARD);
+            myMotor_4->run(BACKWARD);
+                delay(1000); 
+            myMotor_1->run(RELEASE);
+            myMotor_2->run(RELEASE);
+            myMotor_3->run(RELEASE);
+            myMotor_4->run(RELEASE); 
+            break;
+            
+
+      case 82 : //R for Right
+            myMotor_1->run(BACKWARD);
+            myMotor_2->run(FORWARD);
+            myMotor_3->run(BACKWARD);
+            myMotor_4->run(FORWARD);
+                delay(1000); 
+            myMotor_1->run(RELEASE);
+            myMotor_2->run(RELEASE);
+            myMotor_3->run(RELEASE);
+            myMotor_4->run(RELEASE); 
+            break;
+            
+      case 66 : //B for Back
+            myMotor_1->run(BACKWARD);
+            myMotor_2->run(BACKWARD);
+            myMotor_3->run(BACKWARD);
+            myMotor_4->run(BACKWARD);
+                delay(1000); 
+            myMotor_1->run(RELEASE);
+            myMotor_2->run(RELEASE);
+            myMotor_3->run(RELEASE);
+            myMotor_4->run(RELEASE); 
+            break;
+            
+      case 89 : //Y for Rotate Left
+            myMotor_1->run(BACKWARD);
+            myMotor_2->run(FORWARD);
+            myMotor_3->run(FORWARD);
+            myMotor_4->run(BACKWARD);
+                delay(1000); 
+            myMotor_1->run(RELEASE);
+            myMotor_2->run(RELEASE);
+            myMotor_3->run(RELEASE);
+            myMotor_4->run(RELEASE); 
+            break;
+                  case 90 : //Z for Rotate Right
+            myMotor_1->run(FORWARD);
+            myMotor_2->run(BACKWARD);
+            myMotor_3->run(BACKWARD);
+            myMotor_4->run(FORWARD);
+                delay(1000); 
+            myMotor_1->run(RELEASE);
+            myMotor_2->run(RELEASE);
+            myMotor_3->run(RELEASE);
+            myMotor_4->run(RELEASE); 
+            break;
+            
+}
+ 
+ }
+ 
+}
